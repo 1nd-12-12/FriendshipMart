@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Friendship Mart - Custom Gifts & Personalized Items</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+    body {
+      background-color: #f7f7f7;
+    }
+
+    /* Top Navigation Header */
+    header {
+      background-color: #fce4ec;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #f8bbd0;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      font-size: 22px;
+      font-weight: bold;
+      color: #6a1b9a;
+    }
+    .brand-logo span {
+      margin-right: 8px;
+      font-size: 26px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 15px;
+      list-style: none;
+      color: #4a148c;
+      font-weight: 500;
+      font-size: 14px;
+    }
+    .nav-links li {
+      cursor: pointer;
+    }
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .search-box {
+      display: flex;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .search-box input {
+      padding: 6px 10px;
+      border: none;
+      outline: none;
+    }
+    .search-box button {
+      background: #6a1b9a;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      cursor: pointer;
+    }
+    .cart-btn {
+      color: #4a148c;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* Filter Bar */
+    .filter-bar {
+      padding: 12px 20px;
+      background-color: #fff;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: #333;
+    }
+    .filter-bar select {
+      padding: 5px 10px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+
+    /* Product Grid Container */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      padding: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* Card Design */
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .card-img-container {
+      position: relative;
+      width: 100%;
+      height: 240px;
+      background: #e0e0e0;
+    }
+    .card-img-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .overlay-name {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 30px 10px 8px 10px;
+      background: linear-gradient(transparent, rgba(0,0,0,0.8));
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .card-body {
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .subtitle {
+      font-size: 12px;
+      color: #555;
+      line-height: 1.3;
+      height: 32px;
+      overflow: hidden;
+    }
+    .stars {
+      color: #ffb300;
+      font-size: 14px;
+    }
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 4px;
+    }
+    .price {
+      font-weight: bold;
+      color: #222;
+      font-size: 14px;
+    }
+    .add-btn {
+      background-color: #6a1b9a;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 12px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .add-btn:hover {
+      background-color: #4a148c;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #512da8;
+      color: white;
+      text-align: center;
+      padding: 12px;
+      font-size: 13px;
+      margin-top: 20px;
+    }
+    footer a {
+      color: #d1c4e9;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+
+    /* Modal / Pop-up Prank */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .modal-content {
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      text-align: center;
+      max-width: 350px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+    .modal-content h3 {
+      color: #6a1b9a;
+      margin-bottom: 10px;
+    }
+    .modal-content p {
+      color: #333;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+    .modal-content button {
+      margin-top: 15px;
+      padding: 8px 20px;
+      background: #6a1b9a;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header Section -->
+  <header>
+    <div class="brand-logo">
+      <span>🛍️</span> Friendship Mart
+    </div>
+    <ul class="nav-links">
+      <li>Mugs ▾</li>
+      <li>Photo Frames ▾</li>
+      <li>Keychains ▾</li>
+      <li>Gift Hampers ▾</li>
+    </ul>
+    <div class="header-right">
+      <div class="search-box">
+        <input type="text" placeholder="Search products...">
+        <button>🔍</button>
+      </div>
+      <div class="cart-btn">🛒 Cart (0)</div>
+    </div>
+  </header>
+
+  <!-- Filter Bar -->
+  <div class="filter-bar">
+    <label for="filter">Filter:</label>
+    <select id="filter">
+      <option>Personalized Gifts for Friends - Group Portraits ▾</option>
+      <option>Best Sellers</option>
+      <option>New Arrivals</option>
+    </select>
+  </div>
+
+  <!-- Product Grid Container -->
+  <div class="product-grid" id="productGrid"></div>
+
+  <!-- Footer -->
+  <footer>
+    <a href="#">About Us</a> | 
+    <a href="#">Privacy Policy</a> | 
+    <a href="#">Terms of Service</a> | 
+    <a href="#">Contact Support</a>
+  </footer>
+
+  <!-- Prank Modal -->
+  <div class="modal" id="prankModal">
+    <div class="modal-content">
+      <h3 id="modalName">Name</h3>
+      <p id="modalMsg">Prank Message</p>
+      <button onclick="closeModal()">Close</button>
+    </div>
+  </div>
+
+  <script>
+    // Updated image paths to lowercase (girl1.jpg to girl12.jpg)
+    const products = [
+      { id: 1, name: "Priya Sharma", img: "girl1.jpg", sub: "Priya - Personalized Best Friend Coffee Mug", price: "₹499 - ₹1499", msg: "Priya ka mood swing Handle karne ke liye extra recharge zaroori hai! 😂" },
+      { id: 2, name: "Aditi Patel", img: "girl2.jpg", sub: "Aditi - Custom Friend Photo Keychain", price: "₹499 - ₹1499", msg: "Aditi hamesha late aati hai! Purchase failed. 😜" },
+      { id: 3, name: "Sneha Rao", img: "girl3.jpg", sub: "Sneha - Friendship Bracelet with Name", price: "₹499 - ₹1499", msg: "Sneha sirf Momos khaane ke liye agree karegi! 🥟" },
+      { id: 4, name: "Ritu Singh", img: "girl4.jpg", sub: "Ritu - Friendship Bracelet with Name", price: "₹499 - ₹1499", msg: "Ritu Out of Stock hai! Try again in next life. 💔" },
+      { id: 5, name: "Anjali Gupta", img: "girl5.jpg", sub: "Anjali - Personalized Best Photo Keychain", price: "₹499 - ₹1499", msg: "Anjali ko shopping karwane ke liye bank balance kam hai! 💳" },
+      { id: 6, name: "Kavita Reddy", img: "girl6.jpg", sub: "Kavita - Custom Friend Photo Coffee Mug", price: "₹499 - ₹1499", msg: "Kavita is strictly non-refundable! 🚫" },
+      { id: 7, name: "Meera Khan", img: "girl7.jpg", sub: "Meera - Personalized Bracelet Khan", price: "₹499 - ₹1499", msg: "Meera bas reels banane me busy rehti hai! 📸" },
+      { id: 8, name: "Nisha Joshi", img: "girl8.jpg", sub: "Nisha - Custom Friend Photo with Name", price: "₹499 - ₹1499", msg: "Nisha ko gussa bohot jaldi aata hai, dhyan se! ⚡" },
+      { id: 9, name: "Shalini Verma", img: "girl9.jpg", sub: "Shalini - Personalized Sit Friend Coffee Mug", price: "₹499 - ₹1499", msg: "Shalini sirf pizza date pe hi aayegi! 🍕" },
+      { id: 10, name: "Pooja Malhotra", img: "girl10.jpg", sub: "Pooja - Custom Friend Photo Keychain", price: "₹499 - ₹1499", msg: "Pooja ne aapki request decline kar di! 😜" },
+      { id: 11, name: "Riya Das", img: "girl11.jpg", sub: "Riya Das - Friendship Bracelet Photo with Name", price: "₹499 - ₹1499", msg: "Riya hamesha right hoti hai, aap behes nahi kar sakte! 🤫" },
+      { id: 12, name: "Tanvi Kapoor", img: "girl12.jpg", sub: "Tanvi - Personalized Best Friend Kapoor Mug", price: "₹499 - ₹1499", msg: "Tanvi is high maintenance! Low budget users restricted. 😂" }
+    ];
+
+    const grid = document.getElementById('productGrid');
+    products.forEach(p => {
+      const cardHTML = `
+        <div class="card">
+          <div class="card-img-container">
+            <img src="${p.img}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/300x400?text=${p.name}'">
+            <div class="overlay-name">${p.name}</div>
+          </div>
+          <div class="card-body">
+            <div class="subtitle">${p.sub}</div>
+            <div class="stars">⭐⭐⭐⭐⭐</div>
+            <div class="price-row">
+              <span class="price">${p.price}</span>
+              <button class="add-btn" onclick="openPrank('${p.name}', '${p.msg}')">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+      `;
+      grid.innerHTML += cardHTML;
+    });
+
+    function openPrank(name, msg) {
+      document.getElementById('modalName').innerText = "⚠️ Order Status: " + name;
+      document.getElementById('modalMsg').innerText = msg;
+      document.getElementById('prankModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('prankModal').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
