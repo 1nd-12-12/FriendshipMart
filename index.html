@@ -3,16 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Friendship Mart - Custom Gifts & Personalized Items</title>
+  <title>Friendship Mart - Exclusive Partner Booking Portal</title>
   <style>
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
     body {
       background-color: #f7f7f7;
+    }
+
+    /* Top Banner / Countdown Timer */
+    .top-banner {
+      background-color: #d32f2f;
+      color: white;
+      text-align: center;
+      padding: 8px;
+      font-size: 13px;
+      font-weight: bold;
     }
 
     /* Top Navigation Header */
@@ -97,7 +107,7 @@
     /* Product Grid Container */
     .product-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 15px;
       padding: 20px;
       max-width: 1400px;
@@ -151,6 +161,16 @@
       height: 32px;
       overflow: hidden;
     }
+    .loyal-badge {
+      display: inline-block;
+      background: #e8f5e9;
+      color: #2e7d32;
+      font-size: 11px;
+      font-weight: bold;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-top: 2px;
+    }
     .stars {
       color: #ffb300;
       font-size: 14px;
@@ -181,6 +201,37 @@
       background-color: #4a148c;
     }
 
+    /* Customer Reviews Section */
+    .reviews-section {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+    .reviews-section h3 {
+      color: #6a1b9a;
+      margin-bottom: 15px;
+    }
+    .review-card {
+      border-bottom: 1px solid #eee;
+      padding: 10px 0;
+    }
+    .review-card:last-child {
+      border: none;
+    }
+    .review-user {
+      font-weight: bold;
+      font-size: 14px;
+      color: #333;
+    }
+    .review-text {
+      font-size: 13px;
+      color: #555;
+      margin-top: 2px;
+    }
+
     /* Footer */
     footer {
       background-color: #512da8;
@@ -196,7 +247,7 @@
       margin: 0 10px;
     }
 
-    /* Modal / Pop-up Prank */
+    /* Modals (Payment & Prank) */
     .modal {
       display: none;
       position: fixed;
@@ -212,6 +263,7 @@
       border-radius: 10px;
       text-align: center;
       max-width: 350px;
+      width: 90%;
       box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     }
     .modal-content h3 {
@@ -232,9 +284,47 @@
       border-radius: 5px;
       cursor: pointer;
     }
+    .qr-box {
+      width: 150px;
+      height: 150px;
+      margin: 10px auto;
+      background: #f0f0f0;
+      border: 1px solid #ccc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #777;
+    }
+
+    /* Live Toast Notification */
+    .toast-popup {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: #fff;
+      border-left: 4px solid #6a1b9a;
+      padding: 12px 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      border-radius: 6px;
+      font-size: 12px;
+      color: #333;
+      display: none;
+      z-index: 999;
+      animation: slideIn 0.3s ease-out;
+    }
+    @keyframes slideIn {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
   </style>
 </head>
 <body>
+
+  <!-- Flash Sale Countdown Banner -->
+  <div class="top-banner">
+    ⚡ SPECIAL FRIENDSHIP DAY OFFER ENDS IN: <span id="timer">04:59</span> MINS! ⚡
+  </div>
 
   <!-- Header Section -->
   <header>
@@ -242,14 +332,14 @@
       <span>🛍️</span> Friendship Mart
     </div>
     <ul class="nav-links">
-      <li>Mugs ▾</li>
-      <li>Photo Frames ▾</li>
-      <li>Keychains ▾</li>
-      <li>Gift Hampers ▾</li>
+      <li>Loyal GF ▾</li>
+      <li>Best Friend ▾</li>
+      <li>Cute Partners ▾</li>
+      <li>VIP Profiles ▾</li>
     </ul>
     <div class="header-right">
       <div class="search-box">
-        <input type="text" placeholder="Search products...">
+        <input type="text" placeholder="Search profiles...">
         <button>🔍</button>
       </div>
       <div class="cart-btn">🛒 Cart (0)</div>
@@ -258,16 +348,29 @@
 
   <!-- Filter Bar -->
   <div class="filter-bar">
-    <label for="filter">Filter:</label>
+    <label for="filter">Category:</label>
     <select id="filter">
-      <option>Personalized Gifts for Friends - Group Portraits ▾</option>
-      <option>Best Sellers</option>
-      <option>New Arrivals</option>
+      <option>100% Loyal Girlfriends - Direct Booking ▾</option>
+      <option>Top Rated Profiles</option>
+      <option>New Additions</option>
     </select>
   </div>
 
   <!-- Product Grid Container -->
   <div class="product-grid" id="productGrid"></div>
+
+  <!-- Customer Reviews Section -->
+  <div class="reviews-section">
+    <h3>⭐ Verified User Reviews</h3>
+    <div class="review-card">
+      <div class="review-user">Rohan Sharma ⭐⭐⭐⭐⭐</div>
+      <div class="review-text">"Bohot hi mast profile booking portal hai! Ekdum instant response!"</div>
+    </div>
+    <div class="review-card">
+      <div class="review-user">Vikram Singh ⭐⭐⭐⭐⭐</div>
+      <div class="review-text">"100% Loyal Girlfriends catalog dekh kar book kiya tha, maza aa gaya! 😂"</div>
+    </div>
+  </div>
 
   <!-- Footer -->
   <footer>
@@ -277,32 +380,52 @@
     <a href="#">Contact Support</a>
   </footer>
 
-  <!-- Prank Modal -->
+  <!-- Fake Payment Gateway Modal -->
+  <div class="modal" id="paymentModal">
+    <div class="modal-content">
+      <h3 id="payTitle">Booking Checkout</h3>
+      <p>Scan & Pay via Google Pay / Paytm / PhonePe to confirm booking</p>
+      <div class="qr-box">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=PrankedByFriend" alt="QR Code">
+      </div>
+      <p style="font-size: 11px; color: #888;">Scanning QR code confirms instant match...</p>
+      <button onclick="triggerPrank()">Pay Now</button>
+    </div>
+  </div>
+
+  <!-- Prank Result Modal -->
   <div class="modal" id="prankModal">
     <div class="modal-content">
-      <h3 id="modalName">Name</h3>
+      <h3 id="modalName" style="color: #d32f2f;">⚠️ Booking Failed!</h3>
       <p id="modalMsg">Prank Message</p>
       <button onclick="closeModal()">Close</button>
     </div>
   </div>
 
+  <!-- Live Toast Notification -->
+  <div class="toast-popup" id="toast">
+    🛒 <span id="toastMsg">Someone just booked a profile!</span>
+  </div>
+
   <script>
-    // Updated image paths to lowercase (girl1.jpg to girl12.jpg)
     const products = [
-      { id: 1, name: "Priya Sharma", img: "girl1.jpg", sub: "Priya - Personalized Best Friend Coffee Mug", price: "₹499 - ₹1499", msg: "Priya ka mood swing Handle karne ke liye extra recharge zaroori hai! 😂" },
-      { id: 2, name: "Aditi Patel", img: "girl2.jpg", sub: "Aditi - Custom Friend Photo Keychain", price: "₹499 - ₹1499", msg: "Aditi hamesha late aati hai! Purchase failed. 😜" },
-      { id: 3, name: "Sneha Rao", img: "girl3.jpg", sub: "Sneha - Friendship Bracelet with Name", price: "₹499 - ₹1499", msg: "Sneha sirf Momos khaane ke liye agree karegi! 🥟" },
-      { id: 4, name: "Ritu Singh", img: "girl4.jpg", sub: "Ritu - Friendship Bracelet with Name", price: "₹499 - ₹1499", msg: "Ritu Out of Stock hai! Try again in next life. 💔" },
-      { id: 5, name: "Anjali Gupta", img: "girl5.jpg", sub: "Anjali - Personalized Best Photo Keychain", price: "₹499 - ₹1499", msg: "Anjali ko shopping karwane ke liye bank balance kam hai! 💳" },
-      { id: 6, name: "Kavita Reddy", img: "girl6.jpg", sub: "Kavita - Custom Friend Photo Coffee Mug", price: "₹499 - ₹1499", msg: "Kavita is strictly non-refundable! 🚫" },
-      { id: 7, name: "Meera Khan", img: "girl7.jpg", sub: "Meera - Personalized Bracelet Khan", price: "₹499 - ₹1499", msg: "Meera bas reels banane me busy rehti hai! 📸" },
-      { id: 8, name: "Nisha Joshi", img: "girl8.jpg", sub: "Nisha - Custom Friend Photo with Name", price: "₹499 - ₹1499", msg: "Nisha ko gussa bohot jaldi aata hai, dhyan se! ⚡" },
-      { id: 9, name: "Shalini Verma", img: "girl9.jpg", sub: "Shalini - Personalized Sit Friend Coffee Mug", price: "₹499 - ₹1499", msg: "Shalini sirf pizza date pe hi aayegi! 🍕" },
-      { id: 10, name: "Pooja Malhotra", img: "girl10.jpg", sub: "Pooja - Custom Friend Photo Keychain", price: "₹499 - ₹1499", msg: "Pooja ne aapki request decline kar di! 😜" },
-      { id: 11, name: "Riya Das", img: "girl11.jpg", sub: "Riya Das - Friendship Bracelet Photo with Name", price: "₹499 - ₹1499", msg: "Riya hamesha right hoti hai, aap behes nahi kar sakte! 🤫" },
-      { id: 12, name: "Tanvi Kapoor", img: "girl12.jpg", sub: "Tanvi - Personalized Best Friend Kapoor Mug", price: "₹499 - ₹1499", msg: "Tanvi is high maintenance! Low budget users restricted. 😂" }
+      { id: 1, name: "Priya Sharma", img: "girl1.jpg", sub: "100% Loyal Girlfriend - Full Care Package", price: "₹499 - ₹1499", msg: "Priya ka mood swing handle karne ke liye extra recharge zaroori hai! 😂" },
+      { id: 2, name: "Aditi Patel", img: "girl2.jpg", sub: "Certified Loyal Partner - Instant Booking", price: "₹499 - ₹1499", msg: "Aditi hamesha late aati hai! Booking failed. 😜" },
+      { id: 3, name: "Sneha Rao", img: "girl3.jpg", sub: "Super Loyal GF - Unlimited Momos Edition", price: "₹499 - ₹1499", msg: "Sneha sirf Momos khaane ke liye agree karegi! 🥟" },
+      { id: 4, name: "Ritu Singh", img: "girl4.jpg", sub: "100% Loyal Girlfriend - Special Edition", price: "₹499 - ₹1499", msg: "Ritu Out of Stock hai! Try again in next life. 💔" },
+      { id: 5, name: "Anjali Gupta", img: "girl5.jpg", sub: "Verified Loyal Companion - Shopping Lover", price: "₹499 - ₹1499", msg: "Anjali ko shopping karwane ke liye bank balance kam hai! 💳" },
+      { id: 6, name: "Kavita Reddy", img: "girl6.jpg", sub: "100% Loyal Girlfriend - No Return Policy", price: "₹499 - ₹1499", msg: "Kavita is strictly non-refundable! 🚫" },
+      { id: 7, name: "Meera Khan", img: "girl7.jpg", sub: "Certified Loyal Partner - Instagram Reels Expert", price: "₹499 - ₹1499", msg: "Meera bas reels banane me busy rehti hai! 📸" },
+      { id: 8, name: "Nisha Joshi", img: "girl8.jpg", sub: "Super Loyal GF - Dangerously Short Tempered", price: "₹499 - ₹1499", msg: "Nisha ko gussa bohot jaldi aata hai, dhyan se! ⚡" },
+      { id: 9, name: "Shalini Verma", img: "girl9.jpg", sub: "100% Loyal Girlfriend - Pizza Date Special", price: "₹499 - ₹1499", msg: "Shalini sirf pizza date pe hi aayegi! 🍕" },
+      { id: 10, name: "Pooja Malhotra", img: "girl10.jpg", sub: "Verified Loyal Companion - High Attitude", price: "₹499 - ₹1499", msg: "Pooja ne aapki request decline kar di! 😜" },
+      { id: 11, name: "Riya Das", img: "girl11.jpg", sub: "Certified Loyal Partner - Always Right GF", price: "₹499 - ₹1499", msg: "Riya hamesha right hoti hai, aap behes nahi kar sakte! 🤫" },
+      { id: 12, name: "Tanvi Kapoor", img: "girl12.jpg", sub: "100% Loyal Girlfriend - High Maintenance", price: "₹499 - ₹1499", msg: "Tanvi is high maintenance! Low budget users restricted. 😂" }
     ];
 
+    let currentSelected = null;
+
+    // Load Products
     const grid = document.getElementById('productGrid');
     products.forEach(p => {
       const cardHTML = `
@@ -313,10 +436,11 @@
           </div>
           <div class="card-body">
             <div class="subtitle">${p.sub}</div>
+            <span class="loyal-badge">✓ 100% Loyal Tag</span>
             <div class="stars">⭐⭐⭐⭐⭐</div>
             <div class="price-row">
               <span class="price">${p.price}</span>
-              <button class="add-btn" onclick="openPrank('${p.name}', '${p.msg}')">Add to Cart</button>
+              <button class="add-btn" onclick="openPayment('${p.name}', '${p.msg}')">Book Now</button>
             </div>
           </div>
         </div>
@@ -324,15 +448,53 @@
       grid.innerHTML += cardHTML;
     });
 
-    function openPrank(name, msg) {
-      document.getElementById('modalName').innerText = "⚠️ Order Status: " + name;
-      document.getElementById('modalMsg').innerText = msg;
+    // Countdown Timer Logic
+    let time = 299;
+    const timerElem = document.getElementById('timer');
+    setInterval(() => {
+      let mins = Math.floor(time / 60);
+      let secs = time % 60;
+      secs = secs < 10 ? '0' + secs : secs;
+      timerElem.innerText = `0${mins}:${secs}`;
+      if (time > 0) time--;
+    }, 1000);
+
+    // Fake Payment Gateway Open
+    function openPayment(name, msg) {
+      currentSelected = { name, msg };
+      document.getElementById('payTitle').innerText = "Booking: " + name;
+      document.getElementById('paymentModal').style.display = 'flex';
+    }
+
+    // Trigger Prank Message after Payment Click
+    function triggerPrank() {
+      document.getElementById('paymentModal').style.display = 'none';
+      document.getElementById('modalName').innerText = "⚠️ Booking Failed: " + currentSelected.name;
+      document.getElementById('modalMsg').innerText = currentSelected.msg;
       document.getElementById('prankModal').style.display = 'flex';
     }
 
     function closeModal() {
       document.getElementById('prankModal').style.display = 'none';
     }
+
+    // Fake Live Order Notifications
+    const fakeOrders = [
+      "Ramesh from Delhi just booked Priya Sharma (100% Loyal)!",
+      "Aman from Lucknow booked Aditi Patel!",
+      "Rahul from Mumbai booked Sneha Rao!",
+      "Karan from Jaipur booked Tanvi Kapoor!"
+    ];
+
+    setInterval(() => {
+      const toast = document.getElementById('toast');
+      const randomOrder = fakeOrders[Math.floor(Math.random() * fakeOrders.length)];
+      document.getElementById('toastMsg').innerText = randomOrder;
+      toast.style.display = 'block';
+      setTimeout(() => {
+        toast.style.display = 'none';
+      }, 3500);
+    }, 8000);
   </script>
 </body>
 </html>
