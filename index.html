@@ -25,7 +25,7 @@
       font-weight: bold;
     }
 
-    /* Top Navigation Header */
+    /* Header */
     header {
       background-color: #fce4ec;
       padding: 10px 20px;
@@ -104,7 +104,7 @@
       border: 1px solid #ccc;
     }
 
-    /* Product Grid Container */
+    /* Product Grid */
     .product-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -123,6 +123,12 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.12);
     }
     .card-img-container {
       position: relative;
@@ -201,7 +207,7 @@
       background-color: #4a148c;
     }
 
-    /* Customer Reviews Section */
+    /* Reviews Section */
     .reviews-section {
       max-width: 1000px;
       margin: 30px auto;
@@ -247,12 +253,12 @@
       margin: 0 10px;
     }
 
-    /* Modals (Payment & Prank) */
+    /* Modals */
     .modal {
       display: none;
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.6);
+      background: rgba(0,0,0,0.7);
       justify-content: center;
       align-items: center;
       z-index: 1000;
@@ -262,9 +268,11 @@
       padding: 25px;
       border-radius: 10px;
       text-align: center;
-      max-width: 350px;
+      max-width: 380px;
       width: 90%;
       box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      max-height: 90vh;
+      overflow-y: auto;
     }
     .modal-content h3 {
       color: #6a1b9a;
@@ -275,15 +283,61 @@
       font-size: 14px;
       line-height: 1.4;
     }
+
+    /* Form Fields */
+    .form-group {
+      text-align: left;
+      margin-bottom: 12px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: bold;
+      color: #444;
+      margin-bottom: 4px;
+    }
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 13px;
+      outline: none;
+    }
+
     .modal-content button {
-      margin-top: 15px;
+      margin-top: 10px;
       padding: 8px 20px;
       background: #6a1b9a;
       color: white;
       border: none;
       border-radius: 5px;
       cursor: pointer;
+      font-weight: bold;
     }
+
+    .profile-img-large {
+      width: 100%;
+      max-height: 300px;
+      object-fit: contain;
+      border-radius: 8px;
+      background: #000;
+      margin-bottom: 12px;
+    }
+    .profile-details {
+      text-align: left;
+      font-size: 13px;
+      color: #444;
+      margin: 10px 0;
+      background: #f9f9f9;
+      padding: 10px;
+      border-radius: 6px;
+    }
+    .profile-details li {
+      margin-bottom: 5px;
+      list-style: none;
+    }
+
     .qr-box {
       width: 150px;
       height: 150px;
@@ -293,11 +347,9 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: bold;
-      color: #777;
     }
 
-    /* Live Toast Notification */
+    /* Toast Notification */
     .toast-popup {
       position: fixed;
       bottom: 20px;
@@ -326,7 +378,7 @@
     ⚡ SPECIAL FRIENDSHIP DAY OFFER ENDS IN: <span id="timer">04:59</span> MINS! ⚡
   </div>
 
-  <!-- Header Section -->
+  <!-- Header -->
   <header>
     <div class="brand-logo">
       <span>🛍️</span> Friendship Mart
@@ -356,19 +408,27 @@
     </select>
   </div>
 
-  <!-- Product Grid Container -->
+  <!-- Product Grid -->
   <div class="product-grid" id="productGrid"></div>
 
-  <!-- Customer Reviews Section -->
+  <!-- Customer Reviews -->
   <div class="reviews-section">
-    <h3>⭐ Verified User Reviews</h3>
+    <h3>⭐ Verified User Reviews & Ratings</h3>
     <div class="review-card">
       <div class="review-user">Rohan Sharma ⭐⭐⭐⭐⭐</div>
-      <div class="review-text">"Bohot hi mast profile booking portal hai! Ekdum instant response!"</div>
+      <div class="review-text">"Bohot hi mast profile booking portal hai! Instant response aur 100% genuine service!"</div>
     </div>
     <div class="review-card">
       <div class="review-user">Vikram Singh ⭐⭐⭐⭐⭐</div>
-      <div class="review-text">"100% Loyal Girlfriends catalog dekh kar book kiya tha, maza aa gaya! 😂"</div>
+      <div class="review-text">"100% Loyal Girlfriends catalog dekh kar book kiya tha, address pe delivery fast mili! 😂"</div>
+    </div>
+    <div class="review-card">
+      <div class="review-user">Aman Verma ⭐⭐⭐⭐⭐</div>
+      <div class="review-text">"Priya Sharma ki profile dekh kar try kiya, form aur checkout procedure bilkul original site jaisa lagta hai!"</div>
+    </div>
+    <div class="review-card">
+      <div class="review-user">Karan Patel ⭐⭐⭐⭐⭐</div>
+      <div class="review-text">"Fast check-out process! Friends ke sath prank karne ke liye 10/10 site hai."</div>
     </div>
   </div>
 
@@ -380,29 +440,74 @@
     <a href="#">Contact Support</a>
   </footer>
 
-  <!-- Fake Payment Gateway Modal -->
+  <!-- Profile View Modal -->
+  <div class="modal" id="profileModal">
+    <div class="modal-content">
+      <h3 id="profName">Profile View</h3>
+      <img id="profImg" class="profile-img-large" src="" alt="Full View">
+      <div class="profile-details">
+        <ul>
+          <li>🏷️ <strong>Status:</strong> <span style="color: green; font-weight: bold;">Available for Booking</span></li>
+          <li>💚 <strong>Loyalty Score:</strong> 100% Guaranteed</li>
+          <li>📍 <strong>Location:</strong> Verified Local Profile</li>
+          <li>✨ <strong>Description:</strong> <span id="profSub">Full bio details here...</span></li>
+        </ul>
+      </div>
+      <button style="background-color: #2e7d32; margin-right: 8px;" onclick="openAddressModal()">Book Now</button>
+      <button style="background-color: #777;" onclick="closeProfile()">Close</button>
+    </div>
+  </div>
+
+  <!-- Address & Booking Form Modal -->
+  <div class="modal" id="addressModal">
+    <div class="modal-content">
+      <h3 id="addrTitle">Delivery Details</h3>
+      <p style="font-size: 12px; color: #666; margin-bottom: 12px;">Confirm address to deliver your chosen partner!</p>
+      
+      <div class="form-group">
+        <label>Your Full Name:</label>
+        <input type="text" id="custName" placeholder="Enter your full name" required>
+      </div>
+
+      <div class="form-group">
+        <label>Mobile Number:</label>
+        <input type="tel" id="custPhone" placeholder="Enter 10 digit phone number" required>
+      </div>
+
+      <div class="form-group">
+        <label>Delivery Address:</label>
+        <textarea id="custAddr" rows="2" readonly style="background-color: #eee; cursor: not-allowed;">Single Launde Ka Ghar, Dil Toota Gali, India</textarea>
+      </div>
+
+      <button style="background-color: #6a1b9a; width: 100%;" onclick="proceedToPayment()">Proceed to Payment</button>
+      <button style="background-color: #777; width: 100%; margin-top: 6px;" onclick="closeAddressModal()">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Payment Modal -->
   <div class="modal" id="paymentModal">
     <div class="modal-content">
-      <h3 id="payTitle">Booking Checkout</h3>
-      <p>Scan & Pay via Google Pay / Paytm / PhonePe to confirm booking</p>
+      <h3 id="payTitle">Payment Checkout</h3>
+      <p style="font-size: 13px;">Scan & Pay via UPI to confirm booking</p>
       <div class="qr-box">
         <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=PrankedByFriend" alt="QR Code">
       </div>
-      <p style="font-size: 11px; color: #888;">Scanning QR code confirms instant match...</p>
-      <button onclick="triggerPrank()">Pay Now</button>
+      <p style="font-size: 11px; color: #888;">Order will be delivered to Single Launde Ka Ghar after payment verification.</p>
+      <button style="background-color: #2e7d32; width: 100%;" onclick="triggerPrank()">Confirm Payment & Book</button>
+      <button style="background-color: #777; width: 100%; margin-top: 6px;" onclick="closePayment()">Cancel</button>
     </div>
   </div>
 
   <!-- Prank Result Modal -->
   <div class="modal" id="prankModal">
     <div class="modal-content">
-      <h3 id="modalName" style="color: #d32f2f;">⚠️ Booking Failed!</h3>
+      <h3 id="modalName" style="color: #d32f2f;">⚠️ Order Failed!</h3>
       <p id="modalMsg">Prank Message</p>
       <button onclick="closeModal()">Close</button>
     </div>
   </div>
 
-  <!-- Live Toast Notification -->
+  <!-- Toast Notification -->
   <div class="toast-popup" id="toast">
     🛒 <span id="toastMsg">Someone just booked a profile!</span>
   </div>
@@ -425,11 +530,11 @@
 
     let currentSelected = null;
 
-    // Load Products
+    // Load Products Grid
     const grid = document.getElementById('productGrid');
     products.forEach(p => {
       const cardHTML = `
-        <div class="card">
+        <div class="card" onclick="openProfile('${p.name}', '${p.img}', '${p.sub}', '${p.msg}')">
           <div class="card-img-container">
             <img src="${p.img}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/300x400?text=${p.name}'">
             <div class="overlay-name">${p.name}</div>
@@ -440,7 +545,7 @@
             <div class="stars">⭐⭐⭐⭐⭐</div>
             <div class="price-row">
               <span class="price">${p.price}</span>
-              <button class="add-btn" onclick="openPayment('${p.name}', '${p.msg}')">Book Now</button>
+              <button class="add-btn" onclick="event.stopPropagation(); startBookingProcess('${p.name}', '${p.msg}')">Book Now</button>
             </div>
           </div>
         </div>
@@ -448,7 +553,67 @@
       grid.innerHTML += cardHTML;
     });
 
-    // Countdown Timer Logic
+    // Profile View Functions
+    function openProfile(name, img, sub, msg) {
+      currentSelected = { name, msg };
+      document.getElementById('profName').innerText = name;
+      document.getElementById('profImg').src = img;
+      document.getElementById('profSub').innerText = sub;
+      document.getElementById('profileModal').style.display = 'flex';
+    }
+
+    function closeProfile() {
+      document.getElementById('profileModal').style.display = 'none';
+    }
+
+    // Direct Booking Entry
+    function startBookingProcess(name, msg) {
+      currentSelected = { name, msg };
+      openAddressModal();
+    }
+
+    // Address Modal Functions
+    function openAddressModal() {
+      closeProfile();
+      document.getElementById('addrTitle').innerText = "Delivery Info for " + currentSelected.name;
+      document.getElementById('addressModal').style.display = 'flex';
+    }
+
+    function closeAddressModal() {
+      document.getElementById('addressModal').style.display = 'none';
+    }
+
+    function proceedToPayment() {
+      const name = document.getElementById('custName').value.trim();
+      const phone = document.getElementById('custPhone').value.trim();
+
+      if (!name || !phone) {
+        alert("Kripya apna Name aur Mobile Number dalein!");
+        return;
+      }
+
+      closeAddressModal();
+      document.getElementById('payTitle').innerText = "Confirm Booking for " + currentSelected.name;
+      document.getElementById('paymentModal').style.display = 'flex';
+    }
+
+    function closePayment() {
+      document.getElementById('paymentModal').style.display = 'none';
+    }
+
+    // Trigger Prank Modal
+    function triggerPrank() {
+      closePayment();
+      document.getElementById('modalName').innerText = "⚠️ Booking Failed: " + currentSelected.name;
+      document.getElementById('modalMsg').innerText = currentSelected.msg + "\n\n(Address set: Single Launde Ka Ghar! 😂)";
+      document.getElementById('prankModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('prankModal').style.display = 'none';
+    }
+
+    // Countdown Timer
     let time = 299;
     const timerElem = document.getElementById('timer');
     setInterval(() => {
@@ -459,31 +624,13 @@
       if (time > 0) time--;
     }, 1000);
 
-    // Fake Payment Gateway Open
-    function openPayment(name, msg) {
-      currentSelected = { name, msg };
-      document.getElementById('payTitle').innerText = "Booking: " + name;
-      document.getElementById('paymentModal').style.display = 'flex';
-    }
-
-    // Trigger Prank Message after Payment Click
-    function triggerPrank() {
-      document.getElementById('paymentModal').style.display = 'none';
-      document.getElementById('modalName').innerText = "⚠️ Booking Failed: " + currentSelected.name;
-      document.getElementById('modalMsg').innerText = currentSelected.msg;
-      document.getElementById('prankModal').style.display = 'flex';
-    }
-
-    function closeModal() {
-      document.getElementById('prankModal').style.display = 'none';
-    }
-
-    // Fake Live Order Notifications
+    // Fake Toast Notifications
     const fakeOrders = [
       "Ramesh from Delhi just booked Priya Sharma (100% Loyal)!",
       "Aman from Lucknow booked Aditi Patel!",
       "Rahul from Mumbai booked Sneha Rao!",
-      "Karan from Jaipur booked Tanvi Kapoor!"
+      "Karan from Jaipur booked Tanvi Kapoor!",
+      "Vikram from Kanpur entered delivery address!"
     ];
 
     setInterval(() => {
